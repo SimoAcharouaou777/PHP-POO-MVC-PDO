@@ -1,3 +1,9 @@
+<?php
+include_once("../../App/Connection/connect.php");
+require("../../App/Model/book.php");
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,17 +30,20 @@
             <th>Author</th>
             <th>Total Copies</th>
             <th>Available Copies</th>
+            <th>Publication year</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
+            <?php foreach ($books as $book)?>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><?php echo $book['title']; ?></td>
+            <td><?php echo $book['description']; ?></td>
+            <td><?php echo $book['genre']; ?></td>
+            <td><?php echo $book['author']; ?></td>
+            <td><?php echo $book['total_copies']; ?></td>
+            <td><?php echo $book['available_copies']; ?></td>
+            <td><?php echo $book['publication_year'];?></td>
             <td>
                 <button class="btn btn-sm btn-primary">Modify</button>
                 <button class="btn btn-sm btn-danger">Delete</button>
