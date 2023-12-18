@@ -1,0 +1,13 @@
+body {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.book-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
