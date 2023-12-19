@@ -34,3 +34,5 @@ CREATE TABLE Reservation (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (book_id) REFERENCES Book(id)
 );
+INSERT INTO book (title , author , genre , description , publication_year , total_copies  , available_copies)
+VALUES("HARRY POTER" , "abaal" , "fantasy" , "the best" , "1989" , "20" , "19");

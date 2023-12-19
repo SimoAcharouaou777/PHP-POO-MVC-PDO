@@ -58,23 +58,23 @@ include_once "../../App/model/books.php";
 
                 <?php foreach ($books as $book): ?>
                     <tr>
-                        <td><?php echo $book['title']; ?></td>
-                        <td class="description-cell" title="<?php echo $book['description']; ?>">
-                            <?php echo substr($book['description'], 0, 100); ?>
-                            <?php if (strlen($book['description']) > 100): ?>
+                        <td><?php echo $book->getTitle(); ?></td>
+                        <td class="description-cell" title="<?php echo $book->getDescription(); ?>">
+                            <?php echo substr($book->getDescription(), 0, 100); ?>
+                            <?php if (strlen($book->getDescription()) > 100): ?>
                                 <span class="read-more" data-toggle="tooltip" data-placement="top" title="Read More" onclick="showFullDescription(this)">
                                     ...Read More
                                 </span>
                             <?php endif;?>
                         </td>
-                        <td><?php echo $book['genre']; ?></td>
-                        <td><?php echo $book['author']; ?></td>
-                        <td><?php echo $book['total_copies']; ?></td>
-                        <td><?php echo $book['available_copies']; ?></td>
-                        <td><?php echo $book['publication_year']; ?></td>
+                        <td><?php echo $book->getGenre(); ?></td>
+                        <td><?php echo $book->getAuthor(); ?></td>
+                        <td><?php echo $book->getTotalCopies(); ?></td>
+                        <td><?php echo $book->getAvailableCopies(); ?></td>
+                        <td><?php echo $book->getPublicationYear(); ?></td>
                         <td class="action-buttons">
                             <button class="btn btn-sm btn-primary">Modify</button>
-                            <button class="btn btn-sm btn-danger delete-btn" onclick="getbookid(<?php echo $book['id']; ?>)">Delete</button>
+                            <button class="btn btn-sm btn-danger delete-btn" onclick="getbookid(<?php echo $book->getId(); ?>)">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach;?>

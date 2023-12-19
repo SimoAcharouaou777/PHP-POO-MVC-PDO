@@ -35,7 +35,7 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                        <button type="submit" class="btn btn-success w-100" name="submit-signup">Sign Up</button>
                     </form>
                 </div>
             </div>
