@@ -33,7 +33,7 @@ include_once "../../App/model/books.php";
     <h2>Book Inventory</h2>
 
     <div class="mb-3">
-        <button class="btn btn-success" data-toggle="modal" data-target="#addBookModal">Add Book</button>
+        <button class="btn btn-success" data-toggle="modal" onclick="changedirect() ">Add Book</button>
     </div>
 
     <table class="table">
@@ -73,16 +73,18 @@ include_once "../../App/model/books.php";
                         <td><?php echo $book->getAvailableCopies(); ?></td>
                         <td><?php echo $book->getPublicationYear(); ?></td>
                         <td class="action-buttons">
-                            <button class="btn btn-sm btn-primary">Modify</button>
+                            <button class="btn btn-sm btn-primary" onclick ="changederection()" >Modify</button>
                             <button class="btn btn-sm btn-danger delete-btn" onclick="getbookid(<?php echo $book->getId(); ?>)">Delete</button>
                         </td>
                     </tr>
+                    
                 <?php endforeach;?>
                 <?php endif; ?>
 
 
         </tbody>
     </table>
+    
 </div>
 
 <!-- Bootstrap JS and Popper.js (for Bootstrap) -->
@@ -111,6 +113,12 @@ function getbookid(bookid){
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(`bookid=${bookid}`);
     
+}
+function changederection(){
+    window.location.href ="../admin/modify.php";
+}
+function changedirect(){
+    window.location.href ="../admin/addbook.php";
 }
 
 </script>

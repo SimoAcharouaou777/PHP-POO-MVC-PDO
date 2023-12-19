@@ -37,6 +37,31 @@ class books{
   public function getAvailableCopies(){
     return $this->available_copies;
   } 
+  ///////////////////////
+  public function settId(){
+    return $this->id;
+  }
+  public function setTitle($title){
+    $this->title = $title;
+   }
+  public function setAuthor($author){
+    $this->author = $author;
+  } 
+  public function setGenre($genre){
+     $this->genre = $genre ;
+  } 
+  public function setDescription($description){
+     $this->description = $description;
+  } 
+  public function setPublicationYear($publication_year){
+     $this->publication_year = $publication_year;
+  } 
+  public function setTotalCopies($total_copies){
+     $this->total_copies = $total_copies;
+  } 
+  public function setAvailableCopies($available_copies){
+     $this->available_copies =$available_copies;
+  } 
 
   public function __construct($title , $author , $genre , $description ,$publication_year ,$total_copies,$available_copies){
      $this->title = $title;
@@ -60,7 +85,7 @@ class books{
     // !important-- we did this code to call the element with the geters instead of an array , that is why we created a new instence in book class : !important
 
     foreach ($books_from_db as $key => $book) {
-      $book_instance = new books($book['title'] , $book['author'] , $book['genre'],
+      $book_instance = new books( $book['id'] ,$book['title'] , $book['author'] , $book['genre'],
       $book['description'] , $book['publication_year'] , $book['total_copies'] , $book['available_copies']);
       $books [] = $book_instance;
     }
@@ -76,18 +101,18 @@ class books{
      $statemnt->execute();
   }
 
-  public static function creatbook(){
+  public static function creatbook($title , $author , $genre , $description , $publication_year , $total_copies , $available_copies){
        global $connect;
       $sql="INSERT INTO Book (title , author , genre , description  ,publication_year , total_copies , available_copies)
-      VALUES (?,?,?,?,?,?,?)";
+      VALUES (:title , :author , :genre , :description , :publication_year , :total_copies , :available_copies)";
       $statemnt = $connect->prepare($sql);
-      $statemnt->bindParam(1,$this->title);
-      $statemnt->bindParam(2,$this->author);
-      $statemnt->bindParam(3,$this->genre);
-      $statemnt->bindParam(4,$this->description);
-      $statemnt->bindParam(5,$this->publication_year);
-      $statemnt->bindParam(6,$this->total_copies);
-      $statemnt->bindParam(7,$this->available_copies);
+      $statemnt->bindParam(':title', $title, PDO::PARAM_STR);
+      $statemnt->bindParam(':author', $author,PDO::PARAM_STR);
+      $statemnt->bindParam(':genre',$genre,PDO::PARAM_STR);
+      $statemnt->bindParam(':description',$description,PDO::PARAM_STR);
+      $statemnt->bindParam(':publication_year',$publication_year,PDO::PARAM_INT);
+      $statemnt->bindParam(':total_copies',$total_copies,PDO::PARAM_INT);
+      $statemnt->bindParam(':available_copies',$available_copies,PDO::PARAM_INT);
       $statemnt->execute();
   }
 
