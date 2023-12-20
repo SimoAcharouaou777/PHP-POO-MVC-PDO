@@ -63,7 +63,7 @@ include_once "../../App/model/books.php";
 </div>
 <script>
     function getbookid(bookid) {
-        console.log(bookid);
+    
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
