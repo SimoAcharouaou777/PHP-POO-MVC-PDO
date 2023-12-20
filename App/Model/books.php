@@ -75,12 +75,18 @@ class books{
     $this->publication_year = $publication_year;
   }
     
-   public static function getbook()
+   public static function getbook($bookid = null)
 {
     global $connect;
     $sql = "SELECT * FROM Book";
-    $statemnt = $connect->query($sql);
-
+    if($bookid !== null){
+      $sql .=" WHERE id = :bookid";
+    }
+    $statemnt = $connect->prepare($sql);
+    if($bookid !== null){
+      $statemnt->bindParam(':bookid',$bookid, PDO::PARAM_INT);
+    }
+    $statemnt->execute();
     $books_from_db = $statemnt->fetchAll(PDO::FETCH_ASSOC);
 
     $books = [];
@@ -95,6 +101,7 @@ class books{
     return $books;
     
 }
+
   public static function deleteBook($id) {
      global $connect ;
      $sql ="DELETE FROM Book WHERE id = :id ";
@@ -116,6 +123,23 @@ class books{
       $statemnt->bindParam(':total_copies',$total_copies,PDO::PARAM_INT);
       $statemnt->bindParam(':available_copies',$available_copies,PDO::PARAM_INT);
       $statemnt->execute();
+  }
+  public static function updatebook($id,$title , $author , $genre, $description , $publication_year , $total_copies , $available_copies ){
+    global $connect;
+    $sql = "UPDATE Book SET title = :title, author = :author, genre = :genre, description = :description, 
+            publication_year = :publication_year, total_copies = :total_copies, available_copies = :available_copies 
+            WHERE id = :id";
+    $statemnt = $connect->prepare($sql);
+    
+    $statemnt->bindParam(':title', $title, PDO::PARAM_STR);
+    $statemnt->bindParam(':author', $author,PDO::PARAM_STR);
+    $statemnt->bindParam(':genre',$genre,PDO::PARAM_STR);
+    $statemnt->bindParam(':description',$description,PDO::PARAM_STR);
+    $statemnt->bindParam(':publication_year',$publication_year,PDO::PARAM_INT);
+    $statemnt->bindParam(':total_copies',$total_copies,PDO::PARAM_INT);
+    $statemnt->bindParam(':available_copies',$available_copies,PDO::PARAM_INT);
+    $statemnt->bindParam(':id', $id , PDO::PARAM_INT);
+    $statemnt->execute();
   }
 
 }
