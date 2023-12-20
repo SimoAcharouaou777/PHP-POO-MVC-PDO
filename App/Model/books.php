@@ -4,7 +4,7 @@
 include_once(__DIR__.'/../Connection/connect.php');
 
 class books{
-  private $id;
+   private $id;
    private $title;
    private $author ;
    private $genre ;
@@ -38,8 +38,8 @@ class books{
     return $this->available_copies;
   } 
   ///////////////////////
-  public function settId(){
-    return $this->id;
+  public function setId($id){
+   $this->id = $id;
   }
   public function setTitle($title){
     $this->title = $title;
@@ -63,14 +63,16 @@ class books{
      $this->available_copies =$available_copies;
   } 
 
-  public function __construct($title , $author , $genre , $description ,$publication_year ,$total_copies,$available_copies){
-     $this->title = $title;
-     $this->author =$author;
-     $this->genre = $genre;
-     $this->description = $description;
-     $this->publication_year = $publication_year;
-     $this->total_copies = $total_copies;
-     $this->available_copies = $available_copies;
+  public function __construct($id, $title , $author , $genre , $description ,$publication_year ,$total_copies,$available_copies){
+    
+    $this->id = $id;
+    $this->title = $title;
+    $this->description = $description;
+    $this->genre = $genre;
+    $this->author = $author;
+    $this->total_copies = $total_copies;
+    $this->available_copies = $available_copies;
+    $this->publication_year = $publication_year;
   }
     
    public static function getbook()
@@ -95,13 +97,13 @@ class books{
 }
   public static function deleteBook($id) {
      global $connect ;
-     $sql ="DELETE FROM Book WHERE id = ? ";
+     $sql ="DELETE FROM Book WHERE id = :id ";
      $statemnt = $connect->prepare($sql);
-     $statemnt->bindParam('id',$id , PDO::PARAM_INT);
+     $statemnt->bindParam(':id',$id , PDO::PARAM_INT);
      $statemnt->execute();
   }
 
-  public static function creatbook($title , $author , $genre , $description , $publication_year , $total_copies , $available_copies){
+  public static function creatbook( $title , $author , $genre , $description , $publication_year , $total_copies , $available_copies){
        global $connect;
       $sql="INSERT INTO Book (title , author , genre , description  ,publication_year , total_copies , available_copies)
       VALUES (:title , :author , :genre , :description , :publication_year , :total_copies , :available_copies)";

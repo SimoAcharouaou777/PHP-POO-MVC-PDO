@@ -1,7 +1,5 @@
 <?php
 include_once "../../App/Connection/connect.php";
-// use App\controller\Book;
-// use App\model\books;
 include_once "../../App/controller/Book.php";
 include_once "../../App/model/books.php";
 ?>
@@ -9,89 +7,88 @@ include_once "../../App/model/books.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Book Inventory</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        .description-cell {
-            max-width: 300px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .action-buttons {
-            white-space: nowrap;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Library System</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .table-actions {
+      white-space: nowrap;
+    }
+  </style>
 </head>
 <body>
 
 <div class="container mt-4">
-    <h2>Book Inventory</h2>
+  <div class="d-flex justify-content-between mb-3">
+    <h2>Library System</h2>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addBookModal">Add New Book</button>
+  </div>
 
-    <div class="mb-3">
-        <button class="btn btn-success" data-toggle="modal" onclick="changedirect() ">Add Book</button>
-    </div>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Author</th>
-            <th>Total Copies</th>
-            <th>Available Copies</th>
-            <th>Publication year</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if (empty($books)): ?>
-        <tr>
-            <td colspan="8" class="text-center">No books available</td>
-        </tr>
-    <?php else: ?>
-
-                <?php foreach ($books as $book): ?>
-                    <tr>
-                        <td><?php echo $book->getTitle(); ?></td>
-                        <td class="description-cell" title="<?php echo $book->getDescription(); ?>">
-                            <?php echo substr($book->getDescription(), 0, 100); ?>
-                            <?php if (strlen($book->getDescription()) > 100): ?>
-                                <span class="read-more" data-toggle="tooltip" data-placement="top" title="Read More" onclick="showFullDescription(this)">
-                                    ...Read More
-                                </span>
-                            <?php endif;?>
-                        </td>
-                        <td><?php echo $book->getGenre(); ?></td>
-                        <td><?php echo $book->getAuthor(); ?></td>
-                        <td><?php echo $book->getTotalCopies(); ?></td>
-                        <td><?php echo $book->getAvailableCopies(); ?></td>
-                        <td><?php echo $book->getPublicationYear(); ?></td>
-                        <td class="action-buttons">
-                            <button class="btn btn-sm btn-primary" onclick ="changederection()" >Modify</button>
-                            <button class="btn btn-sm btn-danger delete-btn" onclick="getbookid(<?php echo $book->getId(); ?>)">Delete</button>
-                        </td>
-                    </tr>
-                    
-                <?php endforeach;?>
-                <?php endif; ?>
-
-
-        </tbody>
-    </table>
-    
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>genre</th>
+        <th>description</th>
+        <th>publication year</th>
+        <th>total copies</th>
+        <th>available copies</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($books as  $book) : ?>
+      <tr>
+        <td><?php echo $book->getId();  ?></td>
+        <td><?php echo $book->getTitle();  ?></td>
+        <td><?php echo $book->getAuthor();  ?></td>
+        <td><?php echo $book->getGenre();  ?></td>
+        <td><?php echo $book->getDescription();  ?></td>
+        <td><?php echo $book->getPublicationYear();  ?></td>
+        <td><?php echo $book->getTotalCopies();  ?></td>
+        <td><?php echo $book->getAvailableCopies();  ?></td>
+        <td class="table-actions">
+          <button class="btn btn-warning btn-sm" onclick="">Modify</button>
+          <button class="btn btn-danger btn-sm" onclick=" getbookid(<?php echo $book->getId(); ?>) " >Delete</button>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
 </div>
 
-<!-- Bootstrap JS and Popper.js (for Bootstrap) -->
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
+
+
+<!-- Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+
+
+
+
+function getbookid(bookid) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                location.reload();
+            }
+        };
+        xhttp.open("POST", "../../App/controller/Book.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(`bookid=${bookid}`);
+    }</script>
+
+</body>
+</html>
+
+
+
 
 <script>
     function showFullDescription(element) {
@@ -99,28 +96,24 @@ include_once "../../App/model/books.php";
         var fullDescription = cell.attr('title');
         cell.text(fullDescription);
     }
-</script>
-<script>
 
-function getbookid(bookid){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            location.reload();
-        }
-    };
-    xhttp.open("POST", "../../App/controller/Book.php", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send(`bookid=${bookid}`);
-    
-}
-function changederection(){
-    window.location.href ="../admin/modify.php";
-}
-function changedirect(){
-    window.location.href ="../admin/addbook.php";
-}
+    function getbookid(bookid) {
+        console.log(bookid);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                location.reload();
+            }
+        };
+        xhttp.open("POST", "../../App/controller/Book.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(`bookid=${bookid}`);
+    }
 
-</script>
-</body>
-</html>
+    function changederection() {
+        window.location.href = "../admin/modify.php";
+    }
+
+    function changedirect() {
+        window.location.href = "../admin/addbook.php";
+    }
