@@ -1,7 +1,7 @@
 <?php
 include_once "../../App/Connection/connect.php";
-include_once "../../App/controller/Book.php";
-include_once "../../App/model/books.php";
+include_once "../../App/controller/AuthController.php";
+include_once "../../App/model/User.php";
 ?>
 
 <!DOCTYPE html>
@@ -24,46 +24,48 @@ include_once "../../App/model/books.php";
 <div class="container mt-4">
   <div class="d-flex justify-content-between mb-3">
     <h2>Library System</h2>
-    <a   href="addbook.php" class="btn btn-primary">Add New Book</a>
-    <a href="usersection.php" class="btn btn-primary">Move To User Section</a>
+    <a   href="adduser.php" class="btn btn-primary">Add New User</a>
+    
   </div>
 
   <table class="table table-bordered">
     <thead>
       <tr>
         <th>Id</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>genre</th>
-        <th>description</th>
-        <th>publication year</th>
-        <th>total copies</th>
-        <th>available copies</th>
+        <th>User name</th>
+        <th>Full name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Role</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($books as $book): ?>
+        <?php if(empty($users)):?>
+            <tr>
+                <td colspan="6">There are no users</td>
+            </tr>
+            <?php else: ?>
+      <?php foreach ($users as $user): ?>
       <tr>
-        <td><?php echo $book->getId(); ?></td>
-        <td><?php echo $book->getTitle(); ?></td>
-        <td><?php echo $book->getAuthor(); ?></td>
-        <td><?php echo $book->getGenre(); ?></td>
-        <td><?php echo $book->getDescription(); ?></td>
-        <td><?php echo $book->getPublicationYear(); ?></td>
-        <td><?php echo $book->getTotalCopies(); ?></td>
-        <td><?php echo $book->getAvailableCopies(); ?></td>
+        <td><?php echo $user->getId(); ?></td>
+        <td><?php echo $user->getUsername(); ?></td>
+        <td><?php echo $user->getFullname(); ?></td>
+        <td><?php echo $user->getEmail(); ?></td>
+        <td><?php echo $user->getPhone(); ?></td>
+        <td><?php?></td>
         <td class="table-actions">
-          <a href="modify.php?id=<?php echo $book->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
-          <button class="btn btn-danger btn-sm" onclick=" getbookid(<?php echo $book->getId(); ?>) " >Delete</button>
+          <a href="modify.php?id=<?php echo $user->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
+          <button class="btn btn-danger btn-sm" onclick=" getuserid(<?php echo $user->getId(); ?>) " >Delete</button>
         </td>
       </tr>
       <?php endforeach;?>
+      <?php endif; ?>
     </tbody>
   </table>
 </div>
 <script>
-    function getbookid(bookid) {
+    function getuserid(userid) {
     
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -71,16 +73,12 @@ include_once "../../App/model/books.php";
                 location.reload();
             }
         };
-        xhttp.open("POST", "../../App/controller/Book.php", true);
+        xhttp.open("POST", "../../App/controller/AuthController.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send(`bookid=${bookid}`);
+        xhttp.send(`userid=${userid}`);
     }
    
 </script>
-
-
-
-
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
