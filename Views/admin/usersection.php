@@ -56,7 +56,8 @@ include_once "../../App/model/User.php";
         <td><?php?></td>
         <td class="table-actions">
           <a href="modify.php?id=<?php echo $user->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
-          <button class="btn btn-danger btn-sm" onclick=" getuserid(<?php echo $user->getId(); ?>) " >Delete</button>
+          <button class="btn btn-danger btn-sm" onclick="getusername('<?php echo $user->getUsername(); ?>')">Delete</button>
+
         </td>
       </tr>
       <?php endforeach;?>
@@ -65,18 +66,28 @@ include_once "../../App/model/User.php";
   </table>
 </div>
 <script>
-    function getuserid(userid) {
-    
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                location.reload();
-            }
-        };
-        xhttp.open("POST", "../../App/controller/AuthController.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send(`userid=${userid}`);
+    async function getusername(username) {
+    try {
+        const response = await fetch("../../App/controller/AuthController.php", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `username=${username}`,
+        });
+
+        if (response.ok) {
+            const data = await response.text();
+            location.reload();
+        } else {
+            throw new Error('Error deleting user');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('An error occurred while deleting user');
     }
+}
+
    
 </script>
 <!-- Bootstrap JS and Popper.js -->

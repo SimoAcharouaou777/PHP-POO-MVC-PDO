@@ -8,6 +8,7 @@ class User
     private $email;
     private $password;
     private $phone;
+    
     public function getId()
     {
         return $this->id;
@@ -63,7 +64,7 @@ class User
         global $connect;
         $sql = "SELECT * FROM users";
         if ($username !== null) {
-            $sql .= "WHERE username = :username";
+            $sql .= " WHERE user_name = :username";
         }
         $statement = $connect->prepare($sql);
         if ($username !== null) {
@@ -87,17 +88,19 @@ class User
             echo "error : " . $connect->errorInfo();
         }
     }
-    public static function deleteuser($username)
+    public static function deleteUserAndRole($username)
     {
         global $connect;
-        $sql = "DELETE FROM users WHERE username = :username";
-        $statement = $connect->prepare($sql);
-        if ($statement) {
-            $statement->bindParam(':username', $username, PDO::PARAM_STR);
-            $statement->execute();
-        } else {
+        $sqlRole = "DELETE FROM user_role WHERE user_id = (SELECT id FROM users WHERE user_name = :username)";
+        $statementRole =$connect->prepare($sqlRole);
+        $statementRole->bindParam(':username',$username , PDO::PARAM_STR);
+        $statementRole->execute();
 
-        }
+        $sqlUser = "DELETE FROM users WHERE user_name = :username";
+        $statementUser = $connect->prepare($sqlUser);
+        $statementUser->bindParam(':username',$username,PDO::PARAM_STR);
+        $statementUser->execute();
+        
     }
 
 }
