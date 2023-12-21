@@ -19,7 +19,7 @@ include_once("../../App/controller/AuthController.php");
   <form method="post" action="">
     <div class="form-group">
       <label for="title">Username:</label>
-      <input type="text" class="form-control" id="fullname" name ="username" placeholder="Enter username"  required>
+      <input type="text" class="form-control" id="username" name ="username" placeholder="Enter username"  required>
     </div>
     <div class="form-group">
       <label for="title">Fullname:</label>
@@ -28,6 +28,10 @@ include_once("../../App/controller/AuthController.php");
     <div class="form-group">
       <label for="title">Email:</label>
       <input type="text" class="form-control" id="email" name="email" placeholder="Enter email"  required>
+    </div>
+    <div class="form-group">
+      <label for="title">Password:</label>
+      <input type="text" class="form-control" id="password" name="password" placeholder="Enter password"  required>
     </div>
     <div class="form-group">
       <label for="description">Phone:</label>

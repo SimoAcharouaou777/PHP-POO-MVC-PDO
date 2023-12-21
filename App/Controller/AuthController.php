@@ -13,13 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['username'])) {
     }
 }
 if (isset($_POST['submitadduser'])) {
-    $username = $_POST['username'];
-    $fullname = $_POST['fullname'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $phone = $_POST['phone'];
-
-    User::creatUser($username, $fullname, $email, $password, $phone);
+    
+    User::creatUser($_POST['username'], $_POST['fullname'], $_POST['email'], $_POST['password'], $_POST['phone']);
     header("location:usersection.php");
 }
 $username = $fullname = $email = $phone = '';
@@ -54,6 +49,9 @@ if (isset($_POST['submitmodifyuser'])) {
     header("location:usersection.php");
     exit();
 }
+}
+if(isset($_POST['submit-signup'])){
+
 }
 
 ?>

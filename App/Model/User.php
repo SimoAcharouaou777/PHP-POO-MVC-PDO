@@ -8,7 +8,11 @@ class User
     private $email;
     private $password;
     private $phone;
+    private $rolename;
 
+    public function getRoleName(){
+       return $this->rolename;
+    }
     public function getId()
     {
         return $this->id;
@@ -30,7 +34,7 @@ class User
         return $this->phone;
     }
 
-    public function __construct($id, $username, $fullname, $email, $password, $phone)
+    public function __construct($id, $username, $fullname, $email, $password, $phone,$rolename)
     {
         $this->id = $id;
         $this->username = $username;
@@ -38,6 +42,7 @@ class User
         $this->email = $email;
         $this->password = $password;
         $this->phone = $phone;
+        $this->rolename = $rolename;
     }
 
     public static function creatUser($username, $fullname, $email, $password, $phone)
@@ -62,7 +67,9 @@ class User
     public static function getByUsername($username = null)
     {
         global $connect;
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT users.*, role.name FROM users
+        LEFT JOIN user_role ON users.id = user_role.user_id
+        LEFT JOIN role ON user_role.role_id = role.id";
         if ($username !== null) {
             $sql .= " WHERE user_name = :username";
         }
@@ -77,7 +84,7 @@ class User
                 $users = [];
                 foreach ($resultInstances as $key => $result) {
                     $userInstance = new User($result['id'], $result['user_name'], $result['full_name'],
-                        $result['email'], $result['password'], $result['phone']);
+                        $result['email'], $result['password'], $result['phone'],$result['name']);
                     $users[] = $userInstance;
                 }
                 return $users;
