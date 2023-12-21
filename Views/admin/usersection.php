@@ -10,7 +10,7 @@ include_once "../../App/model/User.php";
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Library System</title>
+  <title>User System</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
@@ -23,7 +23,7 @@ include_once "../../App/model/User.php";
 
 <div class="container mt-4">
   <div class="d-flex justify-content-between mb-3">
-    <h2>Library System</h2>
+    <h2>User System</h2>
     <a   href="adduser.php" class="btn btn-primary">Add New User</a>
     
   </div>
@@ -55,7 +55,7 @@ include_once "../../App/model/User.php";
         <td><?php echo $user->getPhone(); ?></td>
         <td><?php?></td>
         <td class="table-actions">
-          <a href="modify.php?id=<?php echo $user->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
+          <a href="modifyuser.php?id=<?php echo $user->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
           <button class="btn btn-danger btn-sm" onclick="getusername('<?php echo $user->getUsername(); ?>')">Delete</button>
 
         </td>
