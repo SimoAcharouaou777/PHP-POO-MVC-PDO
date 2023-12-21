@@ -41,7 +41,6 @@ if(isset($_GET['id'])){
       $totalCopies = $book[0]->getTotalCopies();
       $availableCopies = $book[0]->getAvailableCopies();
     } else {
-  
       echo "Book not found";
     }
   

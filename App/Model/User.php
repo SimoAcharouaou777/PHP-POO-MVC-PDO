@@ -8,7 +8,7 @@ class User
     private $email;
     private $password;
     private $phone;
-    
+
     public function getId()
     {
         return $this->id;
@@ -72,22 +72,24 @@ class User
         }
         if ($statement) {
             $statement->execute();
-            $resultinstance = $statement->fetchAll(PDO::FETCH_ASSOC);
-            if ($resultinstance) {
+            $resultInstances = $statement->fetchAll(PDO::FETCH_ASSOC);
+            if ($resultInstances) {
                 $users = [];
-                foreach ($resultinstance as $key => $result) {
-                    $resultinstance = new User($result['id'], $result['user_name'], $result['full_name']
-                        , $result['email'], $result['password'], $result['phone']);
-                    $users[] = $resultinstance;
+                foreach ($resultInstances as $key => $result) {
+                    $userInstance = new User($result['id'], $result['user_name'], $result['full_name'],
+                        $result['email'], $result['password'], $result['phone']);
+                    $users[] = $userInstance;
                 }
                 return $users;
             } else {
                 return null;
             }
         } else {
-            echo "error : " . $connect->errorInfo();
+            $errorInfo = $connect->errorInfo();
+            echo "error: " . $errorInfo[2];
         }
     }
+    
     public static function deleteUserAndRole($username)
     {
         global $connect;
@@ -102,6 +104,24 @@ class User
         $statementUser->execute();
         
     }
+    public static function updateUser($originalUsername, $fullname, $email, $phone)
+    {
+        global $connect;
+    
+        $sql = "UPDATE users SET user_name = :newUsername, full_name = :fullname, email = :email, phone = :phone WHERE user_name = :originalUsername";
+    
+        $statement = $connect->prepare($sql);
+    
+        // Use $newUsername instead of $originalUsername
+        $statement->bindParam(':newUsername', $newUsername, PDO::PARAM_STR);
+        $statement->bindParam(':originalUsername', $originalUsername, PDO::PARAM_STR);
+        $statement->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+        $statement->bindParam(':email', $email, PDO::PARAM_STR);
+        $statement->bindParam(':phone', $phone, PDO::PARAM_STR);
+    
+        $statement->execute();
+    }
+    
 
 }
 $users = User::getByUsername();

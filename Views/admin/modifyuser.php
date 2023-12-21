@@ -20,19 +20,19 @@ include_once("../../App/model/User.php");
   <form method="post" action="">
     <div class="form-group">
       <label for="title">Username:</label>
-      <input type="text" class="form-control" id="username" name ="username" placeholder="Enter username" value="<?php  ?>"  required>
+      <input type="text" class="form-control" id="username" name ="username" placeholder="Enter username" value="<?php echo $username ?>"  required>
     </div>
     <div class="form-group">
       <label for="title">Fullname:</label>
-      <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter full name" value="" required>
+      <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter full name" value="<?php echo $fullname ?>" required>
     </div>
     <div class="form-group">
       <label for="title">Email:</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="" required>
+      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="<?php echo $email ?>" required>
     </div>
     <div class="form-group">
       <label for="description">Phone:</label>
-      <input type="text" class="form-control" id="phone" name="phone"  placeholder="Enter phone number" value="" required>
+      <input type="text" class="form-control" id="phone" name="phone"  placeholder="Enter phone number" value="<?php echo $phone ?>" required>
     </div>
     <div class="form-group">
     <label for="role">Role</label>
@@ -41,10 +41,7 @@ include_once("../../App/model/User.php");
         <option value="admin" name="admin">Admin</option>
     </select>
 </div>
-
-  
-   
-    <button type="submit" class="btn btn-primary" name="submitadduser">Save</button>
+    <button type="submit" class="btn btn-primary" name="submitmodifyuser">Save</button>
   </form>
 </div>
 

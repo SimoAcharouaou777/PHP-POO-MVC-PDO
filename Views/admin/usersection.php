@@ -55,7 +55,7 @@ include_once "../../App/model/User.php";
         <td><?php echo $user->getPhone(); ?></td>
         <td><?php?></td>
         <td class="table-actions">
-          <a href="modifyuser.php?id=<?php echo $user->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
+          <a href="modifyuser.php?username=<?php echo $user->getusername(); ?>" class="btn btn-warning btn-sm" >Modify</a>
           <button class="btn btn-danger btn-sm" onclick="getusername('<?php echo $user->getUsername(); ?>')">Delete</button>
 
         </td>
