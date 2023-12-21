@@ -104,7 +104,7 @@ class User
         $statementUser->execute();
         
     }
-    public static function updateUser($originalUsername, $fullname, $email, $phone)
+    public static function updateUser($newUsername, $fullname, $email, $phone,$originalUsername)
     {
         global $connect;
     
@@ -112,7 +112,7 @@ class User
     
         $statement = $connect->prepare($sql);
     
-        // Use $newUsername instead of $originalUsername
+
         $statement->bindParam(':newUsername', $newUsername, PDO::PARAM_STR);
         $statement->bindParam(':originalUsername', $originalUsername, PDO::PARAM_STR);
         $statement->bindParam(':fullname', $fullname, PDO::PARAM_STR);

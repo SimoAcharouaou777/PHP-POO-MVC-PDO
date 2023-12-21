@@ -25,7 +25,7 @@ if (isset($_POST['submitadduser'])) {
 $username = $fullname = $email = $phone = '';
 
 if (isset($_GET['username'])) {
-    
+
     $originalUsername = $_GET['username'];
 
     $users = User::getByUsername($originalUsername);
@@ -49,7 +49,7 @@ if (isset($_POST['submitmodifyuser'])) {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-    User::updateUser($originalUsername, $fullname, $email, $phone);
+    User::updateUser($newUsername, $fullname, $email, $phone,$originalUsername);
 
     header("location:usersection.php");
     exit();
