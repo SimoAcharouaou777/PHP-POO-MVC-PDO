@@ -1,7 +1,7 @@
 <?php
 namespace App\controller;
 
-include_once "../../App/Connection/connect.php";
+include_once __DIR__."/../Connection/connect.php";
 use App\model\books;
 
 class AuthBooks
