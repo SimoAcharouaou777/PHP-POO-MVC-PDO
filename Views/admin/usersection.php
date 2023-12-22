@@ -1,7 +1,18 @@
 <?php
+use App\controller\AuthBooks;
+use App\controller\AuthController;
+require '../../vendor/autoload.php';
 include_once "../../App/Connection/connect.php";
-include_once "../../App/controller/AuthController.php";
-include_once "../../App/model/User.php";
+if(isset($_POST['submitadduser'])){
+  AuthController::creatuser($_POST);
+}
+if(isset($_GET['deleteuser'])){
+  AuthController::deleteUser($_GET['deleteuser']);
+}
+if(isset($_POST['submitmodifyuser'])){
+  AuthController::updateusers($_POST);
+}
+$users =AuthController::showuser(0);
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +67,8 @@ include_once "../../App/model/User.php";
         <td><?php echo $user->getRoleName();?></td>
         <td class="table-actions">
           <a href="modifyuser.php?username=<?php echo $user->getusername(); ?>" class="btn btn-warning btn-sm" >Modify</a>
-          <button class="btn btn-danger btn-sm" onclick="getusername('<?php echo $user->getUsername(); ?>')">Delete</button>
+          <a href="usersection.php?deleteuser=<?php echo $user->getusername(); ?>" class="btn btn-danger btn-sm" >Delete</a>
+       
 
         </td>
       </tr>
@@ -65,31 +77,7 @@ include_once "../../App/model/User.php";
     </tbody>
   </table>
 </div>
-<script>
-    async function getusername(username) {
-    try {
-        const response = await fetch("../../App/controller/AuthController.php", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `username=${username}`,
-        });
 
-        if (response.ok) {
-            const data = await response.text();
-            location.reload();
-        } else {
-            throw new Error('Error deleting user');
-        }
-    } catch (error) {
-        console.error(error);
-        alert('An error occurred while deleting user');
-    }
-}
-
-   
-</script>
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

@@ -1,3 +1,13 @@
+<?php
+include_once("../App/Connection/connect.php");
+use App\controller\AuthController;
+use App\model\User;
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,12 +30,12 @@
                     <form method="post" action="">
                         <h2 class="text-center">Sign Up</h2>
                         <div class="mb-3">
-                            <label for="full name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="full name" name="full name" required>
+                            <label for="username" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">User name</label>
-                            <input type="text" class="form-control" id="Username" name="username" required>
+                            <label for="fullname" class="form-label">Full name</label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
@@ -34,6 +44,10 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
                         </div>
                         <button type="submit" class="btn btn-success w-100" name="submit-signup">Sign Up</button>
                     </form>

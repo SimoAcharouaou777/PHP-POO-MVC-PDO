@@ -1,7 +1,11 @@
 <?php
 include_once("../../App/Connection/connect.php");
-include_once("../../App/controller/AuthController.php");
-include_once("../../App/model/User.php");
+use App\controller\AuthController;
+use App\model\User;
+
+$username = $_GET["username"];
+$res = AuthController::showuser($username);
+
 
 
 ?>
@@ -17,22 +21,22 @@ include_once("../../App/model/User.php");
 
 <div class="container mt-5">
   <h2>Modify User</h2>
-  <form method="post" action="">
+  <form method="post" action="usersection.php">
     <div class="form-group">
       <label for="title">Username:</label>
-      <input type="text" class="form-control" id="username" name ="username" placeholder="Enter username" value="<?php echo $username ?>"  required>
+      <input type="text" class="form-control" id="username" name ="username" placeholder="Enter username" value="<?= $res[0]->getUsername(); ?>"  required>
     </div>
     <div class="form-group">
       <label for="title">Fullname:</label>
-      <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter full name" value="<?php echo $fullname ?>" required>
+      <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter full name" value="<?= $res[0]->getFullname(); ?>" >
     </div>
     <div class="form-group">
       <label for="title">Email:</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="<?php echo $email ?>" required>
+      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="<?= $res[0]->getEmail(); ?>" required>
     </div>
     <div class="form-group">
       <label for="description">Phone:</label>
-      <input type="text" class="form-control" id="phone" name="phone"  placeholder="Enter phone number" value="<?php echo $phone ?>" required>
+      <input type="text" class="form-control" id="phone" name="phone"  placeholder="Enter phone number" value="<?= $res[0]->getPhone(); ?>" required>
     </div>
     <div class="form-group">
     <label for="role">Role</label>

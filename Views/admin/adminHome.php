@@ -1,9 +1,21 @@
 <?php
+use App\controller\AuthBooks;
+use App\controller\AuthController;
+require '../../vendor/autoload.php';
 include_once "../../App/Connection/connect.php";
-include_once "../../App/controller/Book.php";
-include_once "../../App/model/books.php";
-?>
+if(isset($_POST['submitsave'])){
+  AuthBooks::updatbookandmodify($_POST);
+}
+if(isset($_POST['submitaddbook'])){
+  AuthBooks::Addbook($_POST);
+}
+if(isset($_GET['iddelete'])){
+  AuthBooks::deleteBook($_GET['iddelete']);
+}
 
+$books =AuthBooks::showbookandmodify(0);
+?>  
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,7 +67,8 @@ include_once "../../App/model/books.php";
         <td><?php echo $book->getAvailableCopies(); ?></td>
         <td class="table-actions">
           <a href="modify.php?id=<?php echo $book->getId(); ?>" class="btn btn-warning btn-sm" >Modify</a>
-          <button class="btn btn-danger btn-sm" onclick=" getbookid(<?php echo $book->getId(); ?>) " >Delete</button>
+          <a href="adminHome.php?iddelete=<?php echo $book->getId(); ?>" class="btn btn-danger btn-sm" >Delete</a>
+  
         </td>
       </tr>
       <?php endforeach;?>
@@ -63,18 +76,7 @@ include_once "../../App/model/books.php";
   </table>
 </div>
 <script>
-    function getbookid(bookid) {
-    
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                location.reload();
-            }
-        };
-        xhttp.open("POST", "../../App/controller/Book.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send(`bookid=${bookid}`);
-    }
+
    
 </script>
 

@@ -1,3 +1,9 @@
+<?php
+include_once("../App/Connection/connect.php");
+use App\controller\AuthController;
+use App\model\User;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

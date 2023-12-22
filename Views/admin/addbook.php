@@ -1,6 +1,8 @@
 <?php
-include_once("../../App/Connection/connect.php");
-include_once("../../App/controller/Book.php");
+
+use App\controller\AuthBooks;
+require '../../vendor/autoload.php';
+include_once "../../App/Connection/connect.php";
 
 
 ?>
@@ -16,7 +18,7 @@ include_once("../../App/controller/Book.php");
 
 <div class="container mt-5">
   <h2>Add New Book</h2>
-  <form method="post" action="">
+  <form method="post" action="adminHome.php">
     <div class="form-group">
       <label for="title">Title:</label>
       <input type="text" class="form-control" id="title" name ="title" placeholder="Enter title" value="" required>

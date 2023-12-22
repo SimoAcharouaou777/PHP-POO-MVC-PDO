@@ -1,9 +1,10 @@
 
 <?php
+use App\controller\AuthBooks;
+require '../../vendor/autoload.php';
 include_once "../../App/Connection/connect.php";
-include_once "../../App/controller/Book.php";
-include_once "../../App/model/books.php";
-
+$id=$_GET["id"];
+$res =AuthBooks::showbookandmodify($id);
 
 ?>
 
@@ -20,38 +21,38 @@ include_once "../../App/model/books.php";
 
 <div class="container mt-5">
   <h2>Add New Book</h2>
-  <form method="post" action="">
+  <form method="post" action="adminHome.php">
   <div class="form-group">
       <label for="title">ID:</label>
-      <input type="text" class="form-control" id="title" name ="title" placeholder="Enter title" value="<?php echo $id ;?>" required>
+      <input type="hidden" class="form-control" id="bookId" name ="bookId" value="<?php echo $res[0]->getId();?>" required>
     </div>
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" name ="title" placeholder="Enter title" value="<?php echo $title ;?>" required>
+      <input type="text" class="form-control" id="title" name ="title" placeholder="Enter title" value="<?php echo $res[0]->getTitle();?>" required>
     </div>
     <div class="form-group">
       <label for="title">Author:</label>
-      <input type="text" class="form-control" id="author" name="author" placeholder="Enter the name of the Author" value="<?php echo $title ;?>" required>
+      <input type="text" class="form-control" id="author" name="author" placeholder="Enter the name of the Author" value="<?php echo $res[0]->getAuthor(); ?>" required>
     </div>
     <div class="form-group">
       <label for="title">Genre:</label>
-      <input type="text" class="form-control" id="genre" name="genre" placeholder="Enter the type of the book" value="<?php echo $genre ;?>" required>
+      <input type="text" class="form-control" id="genre" name="genre" placeholder="Enter the type of the book" value="<?php echo $res[0]->getGenre(); ?>" required>
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"  required><?php echo $description ;?></textarea>
+      <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"  required><?php echo $res[0]->getDescription(); ?></textarea>
     </div>
     <div class="form-group">
       <label for="totalCopies">Publication Year:</label>
-      <input type="number" class="form-control" id="publicationYear" name="publicationYear" placeholder="Enter the publication year" value="<?php echo $publicationYear ;?>" required>
+      <input type="number" class="form-control" id="publicationYear" name="publicationYear" placeholder="Enter the publication year" value="<?php echo $res[0]->getPublicationYear(); ?>" required>
     </div>
     <div class="form-group">
       <label for="totalCopies">Total Copies:</label>
-      <input type="number" class="form-control" id="totalCopies" name="totalCopies" placeholder="Enter total copies" value="<?php echo $totalCopies ;?>" required>
+      <input type="number" class="form-control" id="totalCopies" name="totalCopies" placeholder="Enter total copies" value="<?php echo $res[0]->getTotalCopies(); ?>" required>
     </div>
     <div class="form-group">
       <label for="totalCopies">Available Copies:</label>
-      <input type="number" class="form-control" id="available_copies" name="availableCopies" placeholder="Enter available copies" value="<?php echo $availableCopies ;?>" required>
+      <input type="number" class="form-control" id="available_copies" name="availableCopies" placeholder="Enter available copies" value="<?php echo $res[0]->getAvailableCopies(); ?>" required>
     </div>
     <button type="submit" class="btn btn-primary" name="submitsave">Save</button>
   </form>

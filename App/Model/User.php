@@ -1,14 +1,16 @@
 <?php
+namespace App\model;
+use PDO;
 include_once __DIR__ . '/../Connection/connect.php';
 class User
 {
-    private $id;
-    private $username;
-    private $fullname;
-    private $email;
-    private $password;
-    private $phone;
-    private $rolename;
+    private  $id;
+    private  $username;
+    private  $fullname;
+    private  $email;
+    private  $password;
+    private  $phone;
+    private  $rolename;
 
     public function getRoleName(){
        return $this->rolename;

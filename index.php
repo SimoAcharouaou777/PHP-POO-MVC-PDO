@@ -6,8 +6,6 @@
     <title>Library systeme</title>
 </head>
 <body>
-    <?php
-    print_r(PDO::getAvailableDrivers());
-    ?>
+   
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
-include_once("../../App/Connection/connect.php");
-include_once("../../App/controller/AuthController.php");
+use App\controller\AuthController;
+require '../../vendor/autoload.php';
+include_once "../../App/Connection/connect.php";
 
 
 ?>
@@ -16,7 +17,7 @@ include_once("../../App/controller/AuthController.php");
 
 <div class="container mt-5">
   <h2>Add New User</h2>
-  <form method="post" action="">
+  <form method="post" action="usersection.php">
     <div class="form-group">
       <label for="title">Username:</label>
       <input type="text" class="form-control" id="username" name ="username" placeholder="Enter username"  required>

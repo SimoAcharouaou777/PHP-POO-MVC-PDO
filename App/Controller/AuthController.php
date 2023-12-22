@@ -1,57 +1,79 @@
 <?php
+namespace App\controller;
 include_once "../../App/Connection/connect.php";
-include_once "../../App/model/User.php";
+use App\model\User;
 
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['username'])) {
-    $username = $_POST['username'];
-
-    if (User::deleteUserAndRole($username)) {
-        echo "success";
-    } else {
-        echo "error";
+class AuthController
+{
+    public static function deleteUser($username){
+        User::deleteUserAndRole($username);
     }
-}
-if (isset($_POST['submitadduser'])) {
+    public static function showuser($username)
+    {
+        if($username==0)
+        return $res=User::getByUsername();
+        else return $res=User::getByUsername($username);
+    }
     
-    User::creatUser($_POST['username'], $_POST['fullname'], $_POST['email'], $_POST['password'], $_POST['phone']);
-    header("location:usersection.php");
-}
-$username = $fullname = $email = $phone = '';
-
-if (isset($_GET['username'])) {
-
-    $originalUsername = $_GET['username'];
-
-    $users = User::getByUsername($originalUsername);
-
-    if ($users && count($users) > 0) {
-        $user = $users[0];
-
-        $username = $user->getUsername();
-        $fullname = $user->getFullname();
-        $email = $user->getEmail();
-        $phone = $user->getPhone();
-    } else {
-        echo "User not found";
+    public static function creatuser($formData){
+        extract($formData);
+        User::creatUser( $username, $fullname, $email, $password, $phone);
     }
 
+    public static function getUserDetails()
+    {
+        global $connect;
+        $username = $fullname = $email = $phone = '';
 
-if (isset($_POST['submitmodifyuser'])) {
-    $originalUsername = $_GET['username'];
-    $newUsername = $_POST['username'];
-    $fullname = $_POST['fullname'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
+        $originalUsername = $_GET['username'];
+        $users = User::getByUsername($originalUsername);
 
-    User::updateUser($newUsername, $fullname, $email, $phone,$originalUsername);
+        if ($users && count($users) > 0) {
+            $user = $users[0];
 
-    header("location:usersection.php");
-    exit();
+            $username = $user->getUsername();
+            $fullname = $user->getFullname();
+            $email = $user->getEmail();
+            $phone = $user->getPhone();
+        } else {
+            echo "User not found";
+        }
+
+        return ['username' => $username, 'fullname' => $fullname, 'email' => $email, 'phone' => $phone];
+    }
+
+    
+    public static function updateusers($formData)
+    {
+        extract($formData);  
+        global $connect;
+        $originalUsername = $_GET['username'];
+        $newUsername = $_POST['username'];
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+
+        User::updateUser($newUsername, $fullname, $email, $phone, $originalUsername);
+
+        header("location:usersection.php");
+        exit();
+
+    }
+    public static function signup($username, $fullname, $email, $password, $phone)
+    {
+        global $connect;
+        if (empty($username) || empty($fullname) || empty($email) || empty($password) || empty($phone)) {
+            echo "all the fields are required";
+        } else {
+            $userexist = User::getByUsername($username);
+            if ($userexist) {
+                echo "choes another user name ";
+            } else {
+                $newuser = User::createUser($username, $fullname, $email, $password, $phone);
+            }
+        }
+    }
 }
-}
-if(isset($_POST['submit-signup'])){
 
-}
 
 ?>
